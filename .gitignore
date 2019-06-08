@@ -1,3 +1,7 @@
+### PROJECT SPECIFIC
+spring-petclinic
+
+### STANDARD JAVA GITIGNORE
 # Compiled class file
 *.class
 
