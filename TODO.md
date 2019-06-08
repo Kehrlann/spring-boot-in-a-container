@@ -2,7 +2,7 @@
 
 ## Required
 
-[ ] Ubuntu base image
+[x] Ubuntu base image
 [ ] Openjdk
 [ ] Openjdk-alpine
 [ ] Organize layers
