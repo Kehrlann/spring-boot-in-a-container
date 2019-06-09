@@ -3,7 +3,7 @@
 ## Required
 
 [x] Ubuntu base image
-[ ] Openjdk
+[x] Openjdk
 [ ] Openjdk-alpine
 [ ] Organize layers
 [ ] Jib
