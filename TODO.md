@@ -4,7 +4,7 @@
 
 [x] Ubuntu base image
 [x] Openjdk
-[ ] Openjdk-alpine
+[x] Openjdk-alpine
 [ ] Organize layers
 [ ] Jib
 
