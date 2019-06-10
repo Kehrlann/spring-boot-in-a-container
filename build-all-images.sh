@@ -20,3 +20,9 @@ pushd spring-petclinic
 pack build kehrlann/pet-clinic:pack-cf-cn-buildpack --builder=cloudfoundry/cnb
 pack build kehrlann/pet-clinic:pack-heroku-buildpack --builder=heroku/buildpacks
 popd
+
+# jib
+pushd spring-petclinic
+mvn jib:dockerBuild
+popd
+# mvn com.google.cloud.tools:jib-maven-plugin:build -Dimage=kehrlann/pet-clinic:jib
