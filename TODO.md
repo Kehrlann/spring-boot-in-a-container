@@ -6,7 +6,7 @@
 [x] Openjdk
 [x] Openjdk-alpine
 [x] Distroless
-[ ] Organize layers
+[x] Organize layers
 [ ] Jib
 
 ## Potentially
