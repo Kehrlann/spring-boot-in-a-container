@@ -12,3 +12,4 @@ docker build -t kehrlann/pet-clinic:openjdk-8 -f dockerfiles/2_openjdk.dockerfil
 docker build -t kehrlann/pet-clinic:openjdk-8-alpine -f dockerfiles/3_openjdk-alpine.dockerfile .
 docker build -t kehrlann/pet-clinic:distroless -f dockerfiles/4_distroless.dockerfile .
 source build-layers.sh
+docker build -t kehrlann/pet-clinic:multistage -f dockerfiles/6_multistage.dockerfile .
