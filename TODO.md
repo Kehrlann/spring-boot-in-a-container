@@ -5,6 +5,7 @@
 [x] Ubuntu base image
 [x] Openjdk
 [x] Openjdk-alpine
+[x] Distroless
 [ ] Organize layers
 [ ] Jib
 
