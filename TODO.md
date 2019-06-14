@@ -1,5 +1,8 @@
 # TODO
 
+[ ] Make diagram for layers
+[ ] Reorganize: jdk -> alpine -> distroless
+
 ## Required
 
 [x] Ubuntu base image
