@@ -50,12 +50,16 @@
             <section data-markdown>
                 <textarea data-template>
                     # Spring Boot dans un container
-                    ## Outils et pratiques
+
+                    <br>
                     <br>
 
-                    #### THE EVENT
-                    #### Somewhere
-                    #### dd / mm /2019
+                    ## Outils et pratiques
+
+                    <br>
+
+                    #### Pivotal Paris
+                    #### 04 / 07 / 2019
                 </textarea>
             </section>
 
@@ -143,6 +147,12 @@
 
             <section data-markdown>
                 <textarea data-template>
+                    # Interlude
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
                     ## Les layers
 
                     <img src="images/layers.png" />
@@ -154,21 +164,202 @@
                     ## Les layers
 
                     Les layers sont créées par :
-
+                    
                     - **RUN**
                     - **COPY**
                     - **ADD**
 
-                    Comme leur nom l'indique, elles sont organisées en strates.
+                    Elles sont réutilisées entre les images. **FROM** réutilise toutes les layers de l'image de base.
+
+                    **TODO** : image
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Revenons à nos moutons ...
+                    
+                    ```docker
+                    FROM gcr.io/distroless/java
+
+                    COPY spring-petclinic/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar /app.jar
+
+                    CMD ["/app.jar"]
+                    ```
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Layering: Extraction des dépendances
+                    
+                    ```bash
+                    DEPS_FOLDER=$PWD/spring-petclinic/target/dependency
+                    mkdir -p "$DEPS_FOLDER"
+                    cd "$DEPS_FOLDER"
+                    jar -xf ../*.jar
+                    ```
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Layering: Création de l'image
+                    
+                    ```docker
+                    FROM gcr.io/distroless/java
+
+                    ARG DEPENDENCY=spring-petclinic/target/dependency
+
+                    COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
+                    COPY ${DEPENDENCY}/META-INF /app/META-INF
+                    COPY ${DEPENDENCY}/BOOT-INF/classes /app
+
+                    ENTRYPOINT [
+                      "java",
+                      "-cp",
+                      "app:app/lib/*", 
+                      "org.springframework.samples.petclinic.PetClinicApplication"
+                    ]
+                    ```
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    # Build process
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Multi-stage builds
+                    
+                    ```docker
+                    # BUILD SOURCE
+                    FROM openjdk:8-jdk-alpine as build
+                    WORKDIR /workspace/spring-petclinic/
+
+                    COPY spring-petclinic/mvnw .
+                    COPY spring-petclinic/.mvn .mvn
+                    COPY spring-petclinic/pom.xml .
+                    COPY spring-petclinic/src src
+
+                    RUN ./mvnw package -DskipTests
+                    RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+
+                    # BUILD IMAGE
+                    FROM gcr.io/distroless/java
+
+                    ARG DEPENDENCY=/workspace/spring-petclinic/target/dependency
+
+                    COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+                    COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+                    COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+
+                    ENTRYPOINT [
+                      "java",
+                      "-cp",
+                      "app:app/lib/*", 
+                      "org.springframework.samples.petclinic.PetClinicApplication"
+                    ]
+                    ```
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Multi-stage builds, with caching
+                    
+                    ```docker
+                    # BUILD SOURCE
+                    FROM openjdk:8-jdk-alpine as build
+                    WORKDIR /workspace/spring-petclinic/
+
+                    COPY spring-petclinic/mvnw .
+                    COPY spring-petclinic/.mvn .mvn
+                    COPY spring-petclinic/pom.xml .
+                    COPY spring-petclinic/src src
+
+                    RUN --mount=type=cache,target=/root/.m2 ./mvnw clean package -DskipTests
+                    RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
+
+                    # BUILD IMAGE
+                    FROM gcr.io/distroless/java
+
+                    ARG DEPENDENCY=/workspace/spring-petclinic/target/dependency
+
+                    COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
+                    COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
+                    COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
+
+                    ENTRYPOINT [
+                      "java",
+                      "-cp",
+                      "app:app/lib/*", 
+                      "org.springframework.samples.petclinic.PetClinicApplication"
+                    ]
+                    ```
                 </textarea>
             </section>
 
             <section data-markdown>
                 <textarea data-template>
 
-                    ## Ca suffit les slides, on veut du code !
+                    # Really ?
 
-                    <img src="/img/cat.webp" />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Google Jib
+
+                    Dans votre `pom.xml`, il suffit d'ajouter:
+
+                    ```xml
+                    <build>
+                      [...]
+                      <plugins>
+                        <plugin>
+                          <groupId>com.google.cloud.tools</groupId>
+                          <artifactId>jib-maven-plugin</artifactId>
+                          <version>1.3.0</version>
+                          <configuration>
+                            <to>
+                              <image>kehrlann/pet-clinic:jib</image>
+                            </to>
+                          </configuration>
+                        </plugin>
+                      </plugins>
+                    </build>
+                    ```
+
+                    Puis, run:
+
+                    ```bash
+                    $ mvn compile jib:dockerBuild
+                    ```
+
+                    Voire:
+
+                    ```bash
+                    $ mvn compile jib:build
+                    ```
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Also, Cloud-Native buildpacks
+
+                    Build from source !
+
+                    <br>
+
+                    ```bash
+                    $ pack build kehrlann/pet-clinic:pack-cf-cn-buildpack --builder=cloudfoundry/cnb
+                    ```
                 </textarea>
             </section>
 
@@ -176,28 +367,15 @@
                 <textarea data-template>
                     ## A votre tour !
 
-                    **TODO**
-
-                    **TODO**
-
-                    **TODO**
-
-                    **TODO**
-
-                    **TODO**
-
-                    **TODO**
-                    <br>
-
-                    Réinventez vos pipelines: cloud-native, comme votre infrastructure
+                    Réinventez vos containers, explorez !
 
                     <br>
 
-                    https://concourse-ci.org
+                    https://spring.io/guides/topicals/spring-boot-docker/
 
-                    https://concoursetutorial.com
+                    https://github.com/Kehrlann/spring-boot-in-a-container/
 
-                    https://github.com/Kehrlann/concourse-demo
+                    <br>
 
                     Faites moi signe: @Kehrlann
                 </textarea>
