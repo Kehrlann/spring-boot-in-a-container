@@ -1,7 +1,10 @@
 # TODO
 
-[ ] Make diagram for layers
-[ ] Reorganize: jdk -> alpine -> distroless
+[ ] Make diagrams for talking about VMs vs containers, and kernell calls vs hardware interface
+[ ] explain better why CNB are good, and who they are good for
+[ ] open and explain why app developers shouldn't worry too much about containers
+[x] Make diagram for layers
+[x] Reorganize: jdk -> alpine -> distroless
 
 ## Required
 
