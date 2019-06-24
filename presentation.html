@@ -140,7 +140,7 @@
 
                     CMD ["/app.jar"]
                     ```
-                    
+
                     (... mais un peu plus gros en taille)
                 </textarea>
             </section>
@@ -148,6 +148,22 @@
             <section data-markdown>
                 <textarea data-template>
                     # Interlude
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Virtualisation
+
+                    <img src="images/virtualization.png" />
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Containers
+
+                    <img src="images/containers.png" />
                 </textarea>
             </section>
 
@@ -164,7 +180,7 @@
                     ## Les layers
 
                     Les layers sont créées par :
-                    
+
                     - **RUN**
                     - **COPY**
                     - **ADD**
@@ -178,7 +194,7 @@
             <section data-markdown>
                 <textarea data-template>
                     ## Revenons à nos moutons ...
-                    
+
                     ```docker
                     FROM gcr.io/distroless/java
 
@@ -192,7 +208,7 @@
             <section data-markdown>
                 <textarea data-template>
                     ## Layering: Extraction des dépendances
-                    
+
                     ```bash
                     DEPS_FOLDER=$PWD/spring-petclinic/target/dependency
                     mkdir -p "$DEPS_FOLDER"
@@ -205,7 +221,7 @@
             <section data-markdown>
                 <textarea data-template>
                     ## Layering: Création de l'image
-                    
+
                     ```docker
                     FROM gcr.io/distroless/java
 
@@ -218,7 +234,7 @@
                     ENTRYPOINT [
                       "java",
                       "-cp",
-                      "app:app/lib/*", 
+                      "app:app/lib/*",
                       "org.springframework.samples.petclinic.PetClinicApplication"
                     ]
                     ```
@@ -234,7 +250,7 @@
             <section data-markdown>
                 <textarea data-template>
                     ## Multi-stage builds
-                    
+
                     ```docker
                     # BUILD SOURCE
                     FROM openjdk:8-jdk-alpine as build
@@ -260,7 +276,7 @@
                     ENTRYPOINT [
                       "java",
                       "-cp",
-                      "app:app/lib/*", 
+                      "app:app/lib/*",
                       "org.springframework.samples.petclinic.PetClinicApplication"
                     ]
                     ```
@@ -270,7 +286,7 @@
             <section data-markdown>
                 <textarea data-template>
                     ## Multi-stage builds, with caching
-                    
+
                     ```docker
                     # BUILD SOURCE
                     FROM openjdk:8-jdk-alpine as build
@@ -296,7 +312,7 @@
                     ENTRYPOINT [
                       "java",
                       "-cp",
-                      "app:app/lib/*", 
+                      "app:app/lib/*",
                       "org.springframework.samples.petclinic.PetClinicApplication"
                     ]
                     ```
