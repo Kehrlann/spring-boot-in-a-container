@@ -106,7 +106,7 @@
                     ## Un peu mieux...
 
                     ```docker
-                    FROM opendjk:8-jre
+                    FROM openjdk:8-jre
 
                     COPY spring-petclinic/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar /app.jar
 
@@ -120,7 +120,7 @@
                     ## Plus léger !
 
                     ```docker
-                    FROM opendjk:8-jre-alpine
+                    FROM openjdk:8-jre-alpine
 
                     COPY spring-petclinic/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar /app.jar
 
