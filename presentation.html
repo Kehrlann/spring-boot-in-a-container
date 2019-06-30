@@ -81,7 +81,13 @@
 
             <section data-markdown>
                 <textarea data-template>
-                    ## Qui utilise des containers en production aujourd'hui ?
+                    ### Qui utilise des containers en production aujourd'hui ?
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    # Choix de l'image de base
                 </textarea>
             </section>
 
@@ -142,6 +148,17 @@
                     ```
 
                     (... mais un peu plus gros en taille)
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Image de base - take-aways
+
+                    - Container != VM
+                    - Utiliser une image spécialisée
+                    - Penser à la taille (ex: alpine)
+                    - Penser à la sécurité (ex: distroless)
                 </textarea>
             </section>
 
@@ -244,6 +261,15 @@
                       "org.springframework.samples.petclinic.PetClinicApplication"
                     ]
                     ```
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Construire ses images - take-aways
+
+                    - Choisir son image de base (taille, sécurité, ...)
+                    - Séparer dépendances & code dans des layers séparées
                 </textarea>
             </section>
 
@@ -382,6 +408,16 @@
                     ```bash
                     $ pack build kehrlann/pet-clinic:pack-cf-cn-buildpack --builder=cloudfoundry/cnb
                     ```
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
+                    ## Build process - take-aways
+
+                    - Le process de build, c'est important !
+                    - Eviter de builder ses images soi-même
+                    - Standardiser la création d'images
                 </textarea>
             </section>
 
