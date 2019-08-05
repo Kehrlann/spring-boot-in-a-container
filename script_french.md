@@ -1,10 +1,5 @@
 # Lightweight containers and fast build times - a Java example
 
-Google distroless: https://github.com/GoogleContainerTools/distroless
-Google Jib: https://github.com/GoogleContainerTools/jib
-https://www.youtube.com/watch?v=H6gR_Cv4yWI
-Spring Boot Docker: https://spring.io/guides/topicals/spring-boot-docker/
-
 ## Goals
 
 - For beginners: explain what's a container, and that there are different ways to build containers
@@ -183,33 +178,6 @@ Demo time ! Enfin, ça suffit les slides.
 
 ---
 
-## Rough outline
-
-- Who am I
-- What do I do about containers
-
-? What's a container
-? How layers work
-? Showing dive
-
-- Different steps
-
-  - Ubuntu or debian, install open jdk, add your spring app
-    - Seems like a lot of work, doesn't it ?
-  - Openjdk, same as stretch, but the heavy lifting of installing the jdk has been done for you
-    - Okay, simpler but quite fat
-  - Openjdk-alpine, same as openjdk, but much more lightweight
-    - Better ! However the build and push can be a bit slow, right ?
-  - HIATUS: the layers !
-  - Put dependencies first, they change less often then your app code
-    - The push becomes faster
-
-- So now we have a thinner image, that updates faster when you push it
-
-- You can get even thinner and have a smaller attack surface with distroless images
-
-- Also, you shouldn't be thinking about containers too much
-
 ## Distroless notes
 
 - Slower to upload / download
@@ -267,13 +235,3 @@ Demo time ! Enfin, ça suffit les slides.
 - Remove metadata to have reproducible builds
 
 - Hot swap on Kubernetes with Kubernetes dev ... O_O
-
-## Notes / todo
-
-- What's Alpine, really ?
-  - Lightweight linux on MUSL c (not glibc)
-- Multi-stage builds ?
-  - bof
-- Cloud native builpacks
-- Performance benchmarks
-- Try rkt ?
