@@ -1,5 +1,5 @@
 FROM openjdk:8-jre-alpine
 
-COPY spring-petclinic/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar /app.jar
+COPY spring-petclinic/target/spring-petclinic-*.jar /app.jar
 
 ENTRYPOINT ["java","-jar","/app.jar"]
