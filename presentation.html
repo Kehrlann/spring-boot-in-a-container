@@ -100,7 +100,7 @@
 
                     RUN apt update && apt install openjdk-8-jre -y
 
-                    COPY spring-petclinic/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar /app.jar
+                    COPY spring-petclinic/target/spring-petclinic-*.jar /app.jar
 
                     ENTRYPOINT ["java","-jar","/app.jar"]
                     ```
@@ -114,7 +114,7 @@
                     ```docker
                     FROM openjdk:8-jre
 
-                    COPY spring-petclinic/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar /app.jar
+                    COPY spring-petclinic/target/spring-petclinic-*.jar /app.jar
 
                     ENTRYPOINT ["java","-jar","/app.jar"]
                     ```
@@ -128,7 +128,7 @@
                     ```docker
                     FROM openjdk:8-jre-alpine
 
-                    COPY spring-petclinic/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar /app.jar
+                    COPY spring-petclinic/target/spring-petclinic-*.jar /app.jar
 
                     ENTRYPOINT ["java","-jar","/app.jar"]
                     ```
@@ -142,7 +142,7 @@
                     ```docker
                     FROM gcr.io/distroless/java
 
-                    COPY spring-petclinic/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar /app.jar
+                    COPY spring-petclinic/target/spring-petclinic-*.jar /app.jar
 
                     CMD ["/app.jar"]
                     ```
@@ -221,7 +221,7 @@
                     ```docker
                     FROM gcr.io/distroless/java
 
-                    COPY spring-petclinic/target/spring-petclinic-2.1.0.BUILD-SNAPSHOT.jar /app.jar
+                    COPY spring-petclinic/target/spring-petclinic-*.jar /app.jar
 
                     CMD ["/app.jar"]
                     ```
