@@ -422,6 +422,34 @@
 
             <section data-markdown>
                 <textarea data-template>
+                    ## KPACK
+
+                    https://github.com/pivotal/kpack/
+
+                    ⚠️ experimental
+
+                    <br>
+
+                    ```yaml
+                    apiVersion: build.pivotal.io/v1alpha1
+                    kind: Image
+                    metadata:
+                      name: my-image-k8s-name
+                    spec:
+                      tag: kehrlann/pet-clinic:kpack
+                      builder:
+                        name: default-builder
+                        kind: ClusterBuilder
+                      source:
+                        git:
+                          url: "https://github.com/spring-projects/spring-petclinic.git"
+                          revision: master
+                    ```
+                </textarea>
+            </section>
+
+            <section data-markdown>
+                <textarea data-template>
                     ## Build process - take-aways
 
                     - Le process de build, c'est important
