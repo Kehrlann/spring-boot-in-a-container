@@ -1,6 +1,7 @@
 # TODO
 
+[ ] Improve compilation / dependency fetching for optimized layers
 [ ] Make image name configurable
-[ ] pet-clinic -> git submodule
-[ ] copy pom.xml 
 [ ] Explain how to run the presentation.
+[x] pet-clinic -> git submodule
+[x] copy pom.xml 
