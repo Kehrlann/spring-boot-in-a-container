@@ -6,12 +6,13 @@
 
     <title>Spring Boot in a container</title>
 
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/white.css">
-    <!--<link rel="stylesheet" href="css/theme/night.css">-->
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+    <!--<link rel="stylesheet" href="dist/theme/night.css">-->
 
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/monokai.css">
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
 
     <!-- Printing and PDF exports -->
     <script>
@@ -476,9 +477,10 @@
         </div>
     </div>
 
-    <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.js"></script>
-
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
     <script>
             // More info about config & dependencies:
             // - https://github.com/hakimel/reveal.js#configuration
@@ -488,13 +490,7 @@
                 height: 1080,
                 history: true,
                 transition: 'none',
-                dependencies: [
-                { src: 'plugin/markdown/marked.js' },
-                { src: 'plugin/markdown/markdown.js' },
-                { src: 'plugin/notes/notes.js', async: true },
-                { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-                { src: 'plugin/notes-server/client.js', async: true }
-                ]
+                plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
             });
         </script>
     </body>
